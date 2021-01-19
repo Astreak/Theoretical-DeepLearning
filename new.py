@@ -20,7 +20,7 @@ class Model(Module):
                 x=F.log_softmax(self.l4(x),dim=1)
                 return x
         
-class GenerateDataset()  
+# class GenerateDataset()  
 
 class BuildNetwork(object):
         def __init__(self):
@@ -38,7 +38,7 @@ class BuildNetwork(object):
         def train_model(self):
                 self.init_model()
                 self.optimizer=opt.Adam(self.neural.parameters(),lr=0.001)
-                self.epoch=5
+                self.epoch=3
                 for e in range(self.epoch):
                         for i,j in self.train:
                                 self.neural.zero_grad()
@@ -49,11 +49,12 @@ class BuildNetwork(object):
                                 self.optimizer.step()
                         print(f"Loss function after end of epoch {e+1} : {loss}")
         def evaluate(self):
+                c=0
+                T=0
                 for a,b in self.test:
                         pred=self.neural(a.view((-1,28*28)))
                         pred=torch.argmax(pred,axis=1)
-                        c=0
-                        T=0
+                        
                         for i in range(len(pred)):
                                 if b[i]==pred[i]:
                                         c+=1
