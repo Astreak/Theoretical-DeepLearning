@@ -81,4 +81,4 @@ if __name__=="__main__":
                 if pred[i]==y_test[i]:
                         c+=1
                 T+=1
-        print(f'Test_case accuracy {(c/T)*100}')        
+        print(f'Test_case accuracy {(c/T)*100}')       # accuracy 85.7 to 90.3 depending on no of epochs
