@@ -30,7 +30,7 @@ class FeedForward(object):
                 self.shape=shape
                 self.w1=np.random.uniform(-0.01,0.01,(shape,25))
                 self.w2=np.random.uniform(-0.01,0.01,(25,25))
-                self.w3=np.random.uniform(-0.01,0.01,(25,14))
+                self.w3=np.random.uniform(-0.01,0.01,(shape,14))
                 self.w4=np.random.uniform(-0.01,0.01,(14,1))
                 self.b1=np.zeros((25,1))
                 self.b2=np.zeros((25,1))
@@ -52,11 +52,11 @@ class FeedForward(object):
                 P=[]
                 for i in range(e):
                         #forward propagation
-                        a1=np.dot(self.w1.T,X) +self.b1
-                        o1=self.sigmoid(a1)
-                        a2=np.dot(self.w2.T,o1) +self.b2
-                        o2=self.sigmoid(a2)
-                        a3=np.dot(self.w3.T,o2) +self.b3
+                        # a1=np.dot(self.w1.T,X) +self.b1
+                        # o1=self.sigmoid(a1)
+                        # a2=np.dot(self.w2.T,o1) +self.b2
+                        # o2=self.sigmoid(a2)
+                        a3=np.dot(self.w3.T,X) +self.b3
                         o3=self.sigmoid(a3)
                         a4=np.dot(self.w4.T,o3) +self.b4
                         o4=self.sigmoid(a4)
@@ -66,25 +66,25 @@ class FeedForward(object):
                         dw4=np.dot(o3,error.T)
                         db4=np.mean(error,axis=1)
                         db4=np.expand_dims(db4,axis=1)
-                        
+                        # 
                         h1=np.dot(self.w4,error)*self.p_sigmoid(a3)
-                        dw3=np.dot(o2,h1.T)
+                        dw3=np.dot(X,h1.T)
                         db3=np.mean(h1,axis=1)
                         db3=np.expand_dims(db3,axis=1)
-                        
-                        h2=np.dot(self.w3,h1)*self.p_sigmoid(a2)
-                        dw2=np.dot(o1,h2.T)
-                        db2=np.mean(h2,axis=1)
-                        db2=np.expand_dims(db2,axis=1)
-                        
-                        h3=np.dot(self.w2,h2)*self.p_sigmoid(a1)
-                        dw1=np.dot(X,h3.T)
-                        db1=np.mean(h3,axis=1)
-                        db1=np.expand_dims(db1,axis=1)
-                        self.w1-=self.lr*dw1
-                        self.b1-=self.lr*db1
-                        self.w2-=self.lr*dw2
-                        self.b2-=self.lr*db2
+                        # 
+                        # h2=np.dot(self.w3,h1)*self.p_sigmoid(a2)
+                        # dw2=np.dot(o1,h2.T)
+                        # db2=np.mean(h2,axis=1)
+                        # db2=np.expand_dims(db2,axis=1)
+                        # 
+                        # h3=np.dot(self.w2,h2)*self.p_sigmoid(a1)
+                        # dw1=np.dot(X,h3.T)
+                        # db1=np.mean(h3,axis=1)
+                        # db1=np.expand_dims(db1,axis=1)
+                        # self.w1-=self.lr*dw1
+                        # self.b1-=self.lr*db1
+                        # self.w2-=self.lr*dw2
+                        # self.b2-=self.lr*db2
                         self.w3-=self.lr*dw3
                         self.b3-=self.lr*db3
                         self.w4-=self.lr*dw4
@@ -99,10 +99,10 @@ class FeedForward(object):
         def test(self,x):
                 if self.g==False:
                         assert "You have to train the model first otherwise whats the point of testing"
-                o1=self.sigmoid(np.dot(self.w1.T,x)+self.b1) # 2560,m
-                o2=self.sigmoid(np.dot(self.w2.T,o1)+self.b2) # 256,m
-                o3=self.sigmoid(np.dot(self.w3.T,o2)+self.b3) # 64,m
-                o4=self.softmax(np.dot(self.w4.T,o3)+self.b4) #10,m
+                # o1=self.sigmoid(np.dot(self.w1.T,x)+self.b1) # 2560,m
+                # o2=self.sigmoid(np.dot(self.w2.T,o1)+self.b2) # 256,m
+                # o3=self.sigmoid(np.dot(self.w3.T,o2)+self.b3) # 64,m
+                o4=self.sigmoid(np.dot(self.w4.T,x)+self.b4) #10,m
                 return o4
 
 if __name__=="__main__":
